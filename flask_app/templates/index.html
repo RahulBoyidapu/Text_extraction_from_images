@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Text Extraction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            color: #333;
+            background-image: url('path/to/background-image.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+        }
+        
+
+        h1 {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f1f1f1;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            color: #333;
+        }
+
+        .error {
+            color: red;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .image-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .upload-btn {
+            display: block;
+            margin: 0 auto;
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+
+        .upload-btn:hover {
+            background-color: #555;
+        }
+
+        .image-preview {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .text-output {
+            background-color: #f9f9f9;
+            color: #333;
+            padding: 10px;
+            border-radius: 5px;
+            word-wrap: break-word;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }        
+    </style>
+    <script>
+        // Show image preview when a file is selected
+        function showImagePreview(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('image-preview').src = e.target.result;
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Image Text Extraction</h1>
+        {% if error %}
+        <p class="error">{{ error }}</p>
+        {% endif %}
+        <div class="image-container">
+            {% if image %}
+            <img id="image-preview" class="image-preview" src="{{ image }}" alt="Uploaded Image">
+            {% endif %}
+        </div>
+        <form method="post" enctype="multipart/form-data">
+            <input type="file" name="file" accept="image/*" onchange="showImagePreview(this)">
+            <button class="upload-btn" type="submit">Upload Image</button>
+        </form>
+        {% if text %}
+        <div class="text-output">
+            <h2>Image Text:</h2>
+            <p>{{ text }}</p>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>

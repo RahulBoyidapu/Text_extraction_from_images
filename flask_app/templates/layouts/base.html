@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}{% endblock %}</title>
+    <!-- Include CSS or other common assets -->
+</head>
+<body>
+    <header>
+        <!-- Add a common header section -->
+    </header>
+    <main>
+        {% block content %}
+        <!-- This is where child templates can override the content -->
+        {% endblock %}
+    </main>
+    <footer>
+        <!-- Add a common footer section -->
+    </footer>
+</body>
+</html>
