@@ -1,32 +1,30 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Image Text Extraction</title>
+    <title>Image and PDF Text Extraction</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            color: #333;
-            background-image: url('path/to/background-image.jpg');
-            background-repeat: no-repeat;
-            background-size: cover;
-            background-position: center;
+            color: #fff;
+            background-color: #000;
+            margin: 0;
+            padding: 0;
         }
         
-
         h1 {
             text-align: center;
             margin-top: 30px;
+            color: #fff;
         }
 
         .container {
-            max-width: 600px;
+            max-width: 800px;
             margin: 0 auto;
             padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #f1f1f1;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-            color: #333;
+            border: 2px solid #007bff;
+            border-radius: 15px;
+            background-color: rgba(0, 0, 0, 0.8);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
         }
 
         .error {
@@ -38,45 +36,77 @@
         .image-container {
             text-align: center;
             margin-bottom: 20px;
+            border: 2px dashed #007bff;
+            padding: 20px;
+            border-radius: 15px;
+            background-color: #111;
         }
 
         .upload-btn {
             display: block;
             margin: 0 auto;
-            margin-top: 10px;
+            margin-top: 20px;
             padding: 10px 20px;
             font-size: 16px;
-            background-color: #333;
+            background-color: #007bff;
             color: #fff;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s;
         }
-        
 
         .upload-btn:hover {
-            background-color: #555;
+            background-color: #0056b3;
         }
 
         .image-preview {
             max-width: 100%;
             height: auto;
-            margin-bottom: 10px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
         .text-output {
-            background-color: #f9f9f9;
-            color: #333;
-            padding: 10px;
-            border-radius: 5px;
+            background-color: #222;
+            color: #fff;
+            padding: 20px;
+            border: 2px solid #007bff;
+            border-radius: 15px;
             word-wrap: break-word;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }        
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            margin-top: 20px;
+            position: relative;
+        }
+
+        .text-info {
+            color: #ccc;
+            font-size: 14px;
+            margin-top: 10px;
+            text-align: right;
+        }
+
+        @keyframes fadeInOut {
+            0%, 100% {
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+        }
+
+        .ai-animation {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .ai-animation img {
+            border-radius: 50%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            animation: fadeInOut 3s infinite;
+        }
     </style>
     <script>
-        // Show image preview when a file is selected
         function showImagePreview(input) {
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
@@ -86,11 +116,18 @@
                 reader.readAsDataURL(input.files[0]);
             }
         }
+
+        function updateCurrentTime() {
+            var currentTime = new Date().toLocaleTimeString();
+            document.getElementById('current-time').innerText = "Current Time: " + currentTime;
+        }
+        
+        setInterval(updateCurrentTime, 1000);
     </script>
 </head>
 <body>
     <div class="container">
-        <h1>Image Text Extraction</h1>
+        <h1>Image and PDF Text Extraction</h1>
         {% if error %}
         <p class="error">{{ error }}</p>
         {% endif %}
@@ -100,15 +137,23 @@
             {% endif %}
         </div>
         <form method="post" enctype="multipart/form-data">
-            <input type="file" name="file" accept="image/*" onchange="showImagePreview(this)">
-            <button class="upload-btn" type="submit">Upload Image</button>
+            <input type="file" name="file" accept="image/*, .pdf" onchange="showImagePreview(this)">
+            <button class="upload-btn" type="submit">Upload</button>
         </form>
-        {% if text %}
-        <div class="text-output">
-            <h2>Image Text:</h2>
-            <p>{{ text }}</p>
+    </div>
+    {% if text %}
+    <div class="text-output">
+        <h2>Extracted Text:</h2>
+        <p>{{ text }}</p>
+        <div class="text-info">
+            Text Length: {{ text|length }}<br>
+            Deployed by Rahul Boyidapu<br>
+            <span id="current-time">Current Time: </span>
         </div>
-        {% endif %}
+    </div>
+    {% endif %}
+    <div class="ai-animation">
+        <img src="E:\\Downloads\\download.jpeg" alt="AI Animation" width="150" height="150">
     </div>
 </body>
 </html>

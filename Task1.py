@@ -8,7 +8,7 @@ pytesseract.pytesseract.tesseract_cmd = r"C:\Users\Rahul\Tesseract\tesseract.exe
 def extract_text_from_image(image, lang='eng'):
     # Convert the image to grayscale
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    # Apply image preprocessing techniques (adjust according to your needs)
+    # Apply image preprocessing techniques
     gray = cv2.medianBlur(gray, 3)  # Apply median blur to reduce noise
     gray = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)[1]
     # Use Pytesseract to extract text from the image
